@@ -12,7 +12,7 @@ export default function Auth({
     const [showSignUp, setShowSignUp] = useState(true)
     const [user, setUser] = useState(null)
 
-    useEffect(() => {
+/*     useEffect(() => {
         const getToken = () => {
             const token = window.localStorage.getItem('token')
             if (!token || token === 'null' || token === 'undefined') return null
@@ -24,10 +24,10 @@ export default function Auth({
             return token
         }
         const myToken = getToken()
-        const data = token ? JSON.parse(window.atob(myToken.split('.')[1])).user : null
+        const data = myToken ? JSON.parse(window.atob(token.split('.')[1])).user : null
         setUser(data)
         setToken(myToken)
-    }, [])
+    }, []) */
     return (
         <>
             {

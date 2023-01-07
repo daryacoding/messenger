@@ -24,7 +24,7 @@ const login = async (req, res, next) => {
         const match = await bcrypt.compare(password, user.password)
         if (!match) throw new Error('Password did not match')
         res.locals.data.user = user
-        res.locals.data.token = createJWT(user)
+        //res.locals.data.token = createJWT(user)
         next()
     } catch (error) {
         res.status(400).json({ msg: error.message })
@@ -42,9 +42,9 @@ const getChatsByUser = async (req, res, next) => {
     }
 }
 
-const respondWithToken = (req, res) => {
+/* const respondWithToken = (req, res) => {
     res.json(res.locals.data.token)
-}
+} */
 
 const respondWithUser = (req, res) => {
     res.json(res.locals.data.user)
@@ -58,12 +58,13 @@ module.exports = {
     signUp,
     login,
     getChatsByUser,
-    respondWithToken,
+    //respondWithToken,
     respondWithChats,
     respondWithUser
 }
 
-/* Helper Function */
+/* Helper Function 
 function createJWT(user) {
     return jwt.sign({ user }, process.env.SECRET, { expiresIn: '48h' })
-}
+} 
+*/

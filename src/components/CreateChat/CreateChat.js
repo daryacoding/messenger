@@ -12,6 +12,7 @@ export default function CreateChat ({
             >
                 <input type='text' value={chat.message} name='message' onChange={handleChange} placeholder='Enter Message' />
                 <input type='text' value={chat.name} name='name' onChange={handleChange} placeholder='Enter Name' />
+                <input type='submit' />
             </form>
         </>
     )

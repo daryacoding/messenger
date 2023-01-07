@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import Chat from './components/Chat/Chat'
 import Auth from './components/AuthPage/Auth'
+import userEvent from '@testing-library/user-event'
 
 export default function App() {
     /*
@@ -39,7 +40,9 @@ export default function App() {
             localStorage.setItem('token', JSON.stringify(tokenResponse))
         } catch (error) {
             console.error(error)
-        }
+        } finally {
+            window.location.reload()
+        } 
     }
     const signUp = async () => {
         try {
@@ -55,6 +58,8 @@ export default function App() {
             localStorage.setItem('token', JSON.stringify(tokenResponse))
         } catch (error) {
             console.error(error)
+        } finally {
+            window.location.reload()
         }
     }
     const createChat = async () => {
@@ -145,14 +150,24 @@ export default function App() {
         }
     }, [])
     return (
-        <>
+        <main className='App'>
+            {
+                token?
+                <button onClick={() => {
+                    localStorage.removeItem('token')
+                    window.location.reload()
+                }}>
+                    Logout
+                </button>:
+                ''
+            }
             <Auth
-                login={login}
-                credentials={credentials}
-                handleChangeAuth={handleChangeAuth}
-                signUp={signUp}
-                token={token}
-                setToken={setToken}
+            login={login}
+            credentials={credentials}
+            handleChangeAuth={handleChangeAuth}
+            signUp={signUp}
+            token={token}
+            setToken={setToken}
             />
             <Chat
                 chat={chat}
@@ -160,6 +175,6 @@ export default function App() {
                 createChat={createChat}
                 handleChange={handleChange}
             />
-        </>
+        </main>
     )
 }
