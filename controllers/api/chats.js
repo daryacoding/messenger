@@ -1,44 +1,51 @@
-// /controllers/api/chats
-
+require('dotenv').config()
 const Chat = require('../../models/chat')
+const User = require('../../models/user')
 
-module.exports = {
-    create, 
-    index,
-    jsonChat,
-    jsonChats
-}
+// delete chat
+// create chat
+// update chat
 
-// jsonChats, jsonChat
-
-function jsonChat(req, res){
-    res.json(res.locals.data.chat)
-}
-function jsonChats(req, res){
-    res.json(res.locals.data.chats)
-}
-// create
-async function create(req, res, next){
+const destroyChat = async (req, res, next) => {
     try {
-        const chat = await Chat.create(req.body)
-        console.log(chat)
-        res.locals.data.chat = chat
+        const deletedChat = await Chat.findByIdAndDelete(req.params.id)
+        res.locals.data.chat = deletedChat
+        next()
     } catch (error) {
         res.status(400).json({ msg: error.message })
     }
 }
 
-// read
-async function index(req, res, next){
+const updateChat = async (req, res, next) => {
     try {
-        const chats = await Chat.find()
-        res.locals.data.chats = chats
+        const updatedChat = await Chat.findByIdAndUpdate(req.params.id, req.body, { new: true })
+        res.locals.data.chat = updatedChat
         next()
     } catch (error) {
-        res.status(400).json({msg: error.message})
+        res.status(400).json({ msg: error.message })
     }
 }
 
-// update
+const createChat = async (req, res, next) => {
+    try {
+        const createdChat = await Chat.create(req.body)
+        const user = await User.findOne({ email: res.locals.data.email })
+        user.chats.addToSet(createdChat)
+        await user.save()
+        res.locals.data.chat = createdChat
+        next()
+    } catch (error) {
+        res.status(400).json({ msg: error.message })
+    }
+}
 
-// destroy
+const respondWithChat = (req, res) => {
+    res.json(res.locals.data.chat)
+}
+
+module.exports = {
+    destroyChat,
+    updateChat,
+    createChat,
+    respondWithChat
+}
