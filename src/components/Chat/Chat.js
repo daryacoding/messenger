@@ -34,13 +34,20 @@ function Chat({
             </div>
 
             <div className='chat-body'>
-                {chats.map((chat) =>(
                     <p className='chat-message'>
-                        <span className="chat-name">{chat.name}</span>
-                        {chat.message}
+                        <span className="chat-name">Darya</span>
+                        Hello
+                        <span className='chat-timestamp'>
+                            {new Date().toUTCString()}
+                        </span>
                     </p>
-                ))}
-                
+                    <p className='chat-message chat-reciever'>
+                        <span className="chat-name">Diyar</span>
+                        Hi
+                        <span className='chat-timestamp'>
+                            {new Date().toUTCString()}
+                        </span>
+                    </p>
             </div>
             <div className='chat-footer'>
                 <InsertEmoticon />

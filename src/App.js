@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import Chat from './components/Chat/Chat'
 import Auth from './components/AuthPage/Auth'
+import Sidebar from './components/Sidebar/Sidebar'
 import userEvent from '@testing-library/user-event'
 
 export default function App() {
@@ -120,10 +121,6 @@ export default function App() {
         try {
             const response = await fetch(`/api/chats/${id}`, {
                 method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${token}`
-                },
                 body: JSON.stringify(updatedData)
             })
             const data = await response.json()
@@ -151,16 +148,6 @@ export default function App() {
     }, [])
     return (
         <main className='App'>
-            {
-                token?
-                <button onClick={() => {
-                    localStorage.removeItem('token')
-                    window.location.reload()
-                }}>
-                    Logout
-                </button>:
-                ''
-            }
             <Auth
             login={login}
             credentials={credentials}
@@ -169,6 +156,7 @@ export default function App() {
             token={token}
             setToken={setToken}
             />
+            <Sidebar />
             <Chat
                 chat={chat}
                 chats={chats}
