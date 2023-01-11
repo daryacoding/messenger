@@ -1,22 +1,15 @@
-const router = require('express').Router()
-const userCtrl = require('../../controllers/api/users')
-const checkToken = require('../../config/checkToken')
+// /routes/api/users.js
+const express = require('express')
+const router = express.Router()
+const { checkToken, dataController, apiController } = require('../../controllers/api/users')
 const ensureLoggedIn = require('../../config/ensureLoggedIn')
 
-/*
-/api/users
-SignUp
-*/
-router.post('/', userCtrl.signUp)
-/*
-/api/users/login
-Login
-*/
-router.post('/login', userCtrl.login)
-/*
-/api/users/chats
-Get Bookmarks By User
-*/
-router.get('/chats', userCtrl.getChatsByUser, userCtrl.respondWithChats)
+// POST /api/users
+router.post('/', dataController.create, apiController.auth)
+// POST /api/users/login
+router.post('/login', dataController.login, apiController.auth)
+
+// GET /api/users/check-token
+router.get('/check-token', ensureLoggedIn, checkToken)
 
 module.exports = router

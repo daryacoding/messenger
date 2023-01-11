@@ -1,10 +1,11 @@
+
 const { Schema, model } = require('mongoose')
 const bcrypt = require('bcrypt')
 
-const SALT_ROUNDS = 4165
+const SALT_ROUNDS = 6
 
 const userSchema = new Schema({
-    name: {type: String, required: true},
+    name: { type: String, required: true },
     email: {
         type: String,
         unique: true,
@@ -18,12 +19,12 @@ const userSchema = new Schema({
         minLength: 3,
         required: true
     }
-    }, {
+}, {
     timestamps: true,
     toJSON: {
-        transform (doc, ret) {
-        delete ret.password
-        return ret
+        transform(doc, ret) {
+            delete ret.password
+            return ret
         }
     }
 })
