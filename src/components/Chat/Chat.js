@@ -15,7 +15,7 @@ function Chat(props) {
     // index
     const getChats = async () => {
         try {
-            const response = await fetch('/api/chats')
+            const response = await fetch(`/api/chats`)
             const data = await response.json()
             setChats(data)
         } catch (error) {
@@ -45,7 +45,7 @@ function Chat(props) {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({...updatedData})
+                body: JSON.stringify({ ...updatedData })
             })
             const data = await response.json()
             setFoundChat(data)
@@ -54,32 +54,31 @@ function Chat(props) {
         }
     }
     // create
-        const createChat = async () => {
-            try {
-                const response = await fetch(`/api/chats`, {
-                    method: "POST",
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({...newChat})
-                })
-                const data = await response.json()
-                setFoundChat(data)
-                setNewChat({
-                    name: '',
-                    readyToEat: false,
-                    color: ''
-                })
-            } catch (error) {
-                console.error(error)
-            }
+    const createChat = async () => {
+        try {
+            const response = await fetch(`/api/chats`, {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ ...newChat })
+            })
+            const data = await response.json()
+            setFoundChat(data)
+            setNewChat({
+                name: '',
+                color: ''
+            })
+        } catch (error) {
+            console.error(error)
         }
-
-    const handleChange = (evt) => {
-        setNewChat({...newChat, [evt.target.name]: evt.target.value})
     }
 
-    useEffect(()=> {
+    const handleChange = (evt) => {
+        setNewChat({ ...newChat, [evt.target.name]: evt.target.value })
+    }
+
+    useEffect(() => {
         getChats()
     }, [foundChat])
     return (
@@ -103,23 +102,26 @@ function Chat(props) {
                     </IconButton>
                 </div>
             </div>
-                        {chats.map((chat) => {
-                            return (
-                                <div  key={chat._id} className='chat-body'>
-                                    <p className='chat-message'>{chat.message}</p>
-                                    <span className='chat-name'>{chat.name}</span>
-                                </div>
-                            )
-                        })}
-                    <p className='chat-message chat-reciever'>
-                        <span className="chat-name">Diyar</span>
-                        Hi
-                        <span className='chat-timestamp'>
-                            {new Date().toUTCString()}
-                        </span>
-                    </p>
+            {chats.map((chat) => {
+                return (
+                    <div key={chat._id} className='chat-body'>
+                        <p className='chat-message'>{chat.message}</p>
+                        <span className='chat-name'>{chat.name}</span>
+                    </div>
+                )
+            })}
+            <p className='chat-message chat-reciever'>
+                <span className="chat-name">Diyar</span>
+                Hi
+                <span className='chat-timestamp'>
+                    {new Date().toUTCString()}
+                </span>
+            </p>
             <div className='chat-footer'>
                 <InsertEmoticon />
+                <input type='text' value={newChat.message} name='message' onChange={handleChange} placeholder='Enter Message' />
+                <input type='text' value={newChat.name} name='name' onChange={handleChange} placeholder='Enter Name' />
+                <button onClick={() => createChat()}>Send</button>
                 <Mic />
             </div>
         </div>
