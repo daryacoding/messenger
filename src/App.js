@@ -24,10 +24,10 @@ export default function App() {
         <main className='App'>
             {
                 user ?
-                    <>
+                    <div className='app-body'>
                         <Sidebar />
                         <Chat />
-                    </>
+                    </div>
                     :
                     <AuthPage setUser={setUser} />
             }

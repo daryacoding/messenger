@@ -5,6 +5,15 @@ const User = require('../../models/user')
 // delete chat
 // create chat
 // update chat
+const getChats = async (req, res, next) =>{
+    try {
+        const chats = await Chat.find()
+        res.locals.data.chats = chats
+        next()
+    } catch (error) {
+        res.status(400).json({ msg: error.message})
+    }
+}
 
 const destroyChat = async (req, res, next) => {
     try {
@@ -44,6 +53,7 @@ const respondWithChat = (req, res) => {
 }
 
 module.exports = {
+    getChats,
     destroyChat,
     updateChat,
     createChat,

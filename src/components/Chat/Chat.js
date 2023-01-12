@@ -8,64 +8,25 @@ import { AttachFile, InsertEmoticon, MoreVert, SearchOutlined, Mic } from '@mui/
 function Chat(props) {
     const [chats, setChats] = useState([])
     const [foundChat, setFoundChat] = useState(null)
-    const [newChat, setNewChat] = useState({
+    const [chat, setChat] = useState({
         name: '',
         message: ''
     })
-    // index
-    const getChats = async () => {
-        try {
-            const response = await fetch(`/api/chats`)
-            const data = await response.json()
-            setChats(data)
-        } catch (error) {
-            console.error(error)
-        }
-    }
-    // delete
-    const deleteChat = async (id) => {
-        try {
-            const response = await fetch(`/api/chats/${id}`, {
-                method: "DELETE",
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
-            const data = await response.json()
-            setFoundChat(data)
-        } catch (error) {
-            console.error(error)
-        }
-    }
-    // update
-    const updateChat = async (id, updatedData) => {
-        try {
-            const response = await fetch(`/api/chats/${id}`, {
-                method: "PUT",
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ ...updatedData })
-            })
-            const data = await response.json()
-            setFoundChat(data)
-        } catch (error) {
-            console.error(error)
-        }
-    }
+
     // create
     const createChat = async () => {
         try {
             const response = await fetch(`/api/chats`, {
                 method: "POST",
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer %{token}`
                 },
-                body: JSON.stringify({ ...newChat })
+                body: JSON.stringify({ ...chat })
             })
             const data = await response.json()
-            setFoundChat(data)
-            setNewChat({
+            setChats([data, ...chats])
+            setChat({
                 name: '',
                 color: ''
             })
@@ -73,15 +34,30 @@ function Chat(props) {
             console.error(error)
         }
     }
+    /*     const listChatsByUser = async () => {
+            try {
+                const response = await fetch('/api/users/chats', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${JSON.parse(localStorage.getItem('token'))}`
+                    }
+                })
+                const data = await response.json()
+                setChats(data)
+            } catch (error) {
+                console.error(error)
+            }
+        } */
 
     const handleChange = (evt) => {
-        setNewChat({ ...newChat, [evt.target.name]: evt.target.value })
+        setChat({ ...chat, [evt.target.name]: evt.target.value })
     }
-
-    useEffect(() => {
-        getChats()
-    }, [foundChat])
+    /*     useEffect(() => {
+            listChatsByUser()
+        }, [chats]) */
     return (
+
         <div className='chat'>
             <div className='chat-header'>
                 <Avatar />
@@ -102,25 +78,66 @@ function Chat(props) {
                     </IconButton>
                 </div>
             </div>
-            {chats.map((chat) => {
-                return (
-                    <div key={chat._id} className='chat-body'>
-                        <p className='chat-message'>{chat.message}</p>
-                        <span className='chat-name'>{chat.name}</span>
-                    </div>
-                )
-            })}
-            <p className='chat-message chat-reciever'>
-                <span className="chat-name">Diyar</span>
-                Hi
-                <span className='chat-timestamp'>
-                    {new Date().toUTCString()}
-                </span>
-            </p>
+            {/*                 {chats.map((chat) => {
+                    return (
+                        <div className='chat-body'>
+                            <ul>
+                                <li key={chat._id}>
+                                    <p className='chat-message'>{chat.message}</p>
+                                    <span className='chat-name'>{chat.name}</span>
+                                </li>
+                            </ul>
+                        </div>
+                    )
+                })} */}
+            <div className='chat-body'>
+                <p className='chat-message'>
+                    <span className="chat-name">Darya</span>
+                    Hey
+                    <span className='chat-timestamp'>
+                        {new Date().toUTCString()}
+                    </span>
+                </p>
+                <p className='chat-message chat-reciever'>
+                    <span className="chat-name">Diyar</span>
+                    Hi
+                    <span className='chat-timestamp'>
+                        {new Date().toUTCString()}
+                    </span>
+                </p>
+                <p className='chat-message'>
+                    <span className="chat-name">Darya</span>
+                    Are you getting ready
+                    <span className='chat-timestamp'>
+                        {new Date().toUTCString()}
+                    </span>
+                </p>
+                <p className='chat-message chat-reciever'>
+                    <span className="chat-name">Diyar</span>
+                    Almost done
+                    <span className='chat-timestamp'>
+                        {new Date().toUTCString()}
+                    </span>
+                </p>
+                <p className='chat-message'>
+                    <span className="chat-name">Darya</span>
+                    Ok I'm here
+                    <span className='chat-timestamp'>
+                        {new Date().toUTCString()}
+                    </span>
+                </p>
+                <p className='chat-message chat-reciever'>
+                    <span className="chat-name">Diyar</span>
+                    Ok
+                    <span className='chat-timestamp'>
+                        {new Date().toUTCString()}
+                    </span>
+                </p>
+            </div>
             <div className='chat-footer'>
                 <InsertEmoticon />
-                <input type='text' value={newChat.message} name='message' onChange={handleChange} placeholder='Enter Message' />
-                <input type='text' value={newChat.name} name='name' onChange={handleChange} placeholder='Enter Name' />
+                <input type='text' value={chat.message} name='message' onChange={handleChange} placeholder='Enter Message' />
+                <input type='text' value={chat.name} name='name' onChange={handleChange} placeholder='Enter Name' />
                 <button onClick={() => createChat()}>Send</button>
                 <Mic />
             </div>
