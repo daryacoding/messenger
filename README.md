@@ -27,7 +27,7 @@ A messenger application that uses MERN Stack technologies. Multiple users should
 ## Restful Routes for Chats
 
 | # | Action| URL | HTTP Verb | Mongoose Method |
-| ------------- | ------------- | --- | ---| --- | ---| --- | 
+| ------------- | ------------- | --- | ---| --- |
 | ------------- | ------------- | --- | ---| --- | 
 | 1  | Index  | /shows | Get  | Show.find | 
 | 2  | Create  | /api/chats/ | POST | Chat.create(req.body) |
