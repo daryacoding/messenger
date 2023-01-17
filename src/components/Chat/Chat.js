@@ -15,18 +15,16 @@ function Chat(props) {
 
     // create
     const createChat = async () => {
-        const body = {...chat}
         try {
             const response = await fetch(`/api/chats`, {
-                method: 'POST',
+                method: "POST",
                 headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${JSON.parse(localStorage.getItem('token'))}`
+                    'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({...chat})
             })
             const data = await response.json()
-            setChats([data, ...chats])
+            setChats(data)
             setChat({
                 name: '',
                 message: ''
@@ -50,7 +48,7 @@ function Chat(props) {
     }
     useEffect(() => {
         listChatsByUser()
-    }, [chats])
+    }, [])
     return (
 
         <div className='chat'>
