@@ -38,9 +38,10 @@ const updateChat = async (req, res, next) => {
 const createChat = async (req, res, next) => {
     try {
         const createdChat = await Chat.create(req.body)
-        const user = await User.findOne({ email: res.locals.data.email })
+        console.log(req.body)
+/*         const user = await User.findOne({ email: res.locals.data.email })
         user.chats.addToSet(createdChat)
-        await user.save()
+        await user.save() */
         res.locals.data.chat = createdChat
         next()
     } catch (error) {

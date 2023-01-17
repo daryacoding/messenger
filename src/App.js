@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import Chat from './components/Chat/Chat'
 import AuthPage from './components/AuthPage/AuthPage'
 import Sidebar from './components/Sidebar/Sidebar'
+import './App.css'
 
 export default function App() {
     const [state, setState] = useState(null)
@@ -31,7 +32,6 @@ export default function App() {
                     :
                     <AuthPage setUser={setUser} />
             }
-
         </main>
     );
 }

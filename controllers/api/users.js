@@ -15,6 +15,7 @@ const dataController = {
             const user = await User.create(req.body)
             console.log(req.body)
             // token will be a string
+            console.log('annything')
             const token = createJWT(user)
             // send back the token as a string
             // which we need to account for
@@ -35,11 +36,26 @@ const dataController = {
             if (!match) throw new Error()
             res.locals.data.user = user
             res.locals.data.token = createJWT(user)
+            console.log(process.env.SECRET)
             next()
         } catch {
             res.status(400).json('Bad Credentials')
         }
     }
+}
+
+const getChatsByUser = async (req, res, next) => {
+    try {
+        const user = await User.findOne({ email: res.locals.data.email }).populate('chats').sort('chats.createdAt').exec()
+        const chats = user.chats
+        res.locals.data.bookmarks = bookmarks
+    } catch (error) {
+        res.status(400).json({ msg: error.message })
+    }
+}
+
+const respondWithChats = (req, res) => {
+    res.json(res.locals.data.chats)
 }
 
 const apiController = {
@@ -51,7 +67,9 @@ const apiController = {
 module.exports = {
     checkToken,
     dataController,
-    apiController
+    apiController,
+    getChatsByUser,
+    respondWithChats
 }
 
 function createJWT(user) {

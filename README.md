@@ -22,7 +22,7 @@ A messenger application that uses MERN Stack technologies. Multiple users should
 
 - JavaScript
 
--HTML
+- HTML
 
 ## Restful Routes for Chats
 
@@ -37,7 +37,7 @@ A messenger application that uses MERN Stack technologies. Multiple users should
 ## Restful Routes for Users
 
 | # | Action| URL | HTTP Verb | Mongoose Method |
-| ------------- | ------------- | --- | ---| --- | ---| --- | 
+| ------------- | ------------- | --- | ---| --- | 
 | ------------- | ------------- | --- | ---| --- | 
 | 1  | SignUp  | /api/users | POST  | User.find | 
 | 2  | Login  | /api/users/login | POST | User.findOne(req.body) |

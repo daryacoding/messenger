@@ -15,47 +15,42 @@ function Chat(props) {
 
     // create
     const createChat = async () => {
+        const body = {...chat}
         try {
             const response = await fetch(`/api/chats`, {
-                method: "POST",
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    Authorization: `Bearer %{token}`
+                    Authorization: `Bearer ${JSON.parse(localStorage.getItem('token'))}`
                 },
-                body: JSON.stringify({ ...chat })
+                body: JSON.stringify({...chat})
             })
             const data = await response.json()
             setChats([data, ...chats])
             setChat({
                 name: '',
-                color: ''
+                message: ''
             })
         } catch (error) {
             console.error(error)
         }
     }
-    /*     const listChatsByUser = async () => {
-            try {
-                const response = await fetch('/api/users/chats', {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        Authorization: `Bearer ${JSON.parse(localStorage.getItem('token'))}`
-                    }
-                })
-                const data = await response.json()
-                setChats(data)
-            } catch (error) {
-                console.error(error)
-            }
-        } */
+    const listChatsByUser = async () => {
+        try {
+            const response = await fetch('/api/chats')
+            const data = await response.json()
+            setChats(data)
+        } catch (error) {
+            console.error(error)
+        }
+    }
 
     const handleChange = (evt) => {
         setChat({ ...chat, [evt.target.name]: evt.target.value })
     }
-    /*     useEffect(() => {
-            listChatsByUser()
-        }, [chats]) */
+    useEffect(() => {
+        listChatsByUser()
+    }, [chats])
     return (
 
         <div className='chat'>
