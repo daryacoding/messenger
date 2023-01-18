@@ -8,6 +8,7 @@ const User = require('../../models/user')
 const getChats = async (req, res, next) =>{
     try {
         const chats = await Chat.find()
+        console.log(chats)
         res.locals.data.chats = chats
         next()
     } catch (error) {

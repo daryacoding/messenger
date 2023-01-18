@@ -13,6 +13,21 @@ function Chat(props) {
         message: ''
     })
 
+    const listChatsByUser = async () => {
+        try {
+            const response = await fetch('/api/chats', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            const data = await response.json()
+            setChats(data)
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
     // create
     const createChat = async () => {
         try {
@@ -33,15 +48,7 @@ function Chat(props) {
             console.error(error)
         }
     }
-    const listChatsByUser = async () => {
-        try {
-            const response = await fetch('/api/chats')
-            const data = await response.json()
-            setChats(data)
-        } catch (error) {
-            console.error(error)
-        }
-    }
+    
 
     const handleChange = (evt) => {
         setChat({ ...chat, [evt.target.name]: evt.target.value })
