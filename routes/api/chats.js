@@ -6,7 +6,7 @@ const ensureLoggedIn = require('../../config/ensureLoggedIn')
 
 // add routes
 // Index /api/chat
-router.get('/', chatCtrl.getChats, chatCtrl.respondWithChat)
+router.get('/', chatCtrl.getChats, chatCtrl.respondWithChats)
 // Delete /api/chat/:id
 router.delete('/:id', chatCtrl.destroyChat, chatCtrl.respondWithChat)
 // Update /api/chat/:id

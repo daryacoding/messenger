@@ -54,10 +54,15 @@ const respondWithChat = (req, res) => {
     res.json(res.locals.data.chat)
 }
 
+const respondWithChats = (req, res) => {
+    res.json(res.locals.data.chats)
+}
+
 module.exports = {
     getChats,
     destroyChat,
     updateChat,
     createChat,
-    respondWithChat
+    respondWithChat,
+    respondWithChats
 }

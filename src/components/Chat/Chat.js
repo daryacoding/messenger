@@ -36,7 +36,7 @@ function Chat(props) {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({...chat})
+                body: JSON.stringify({ ...chat })
             })
             const data = await response.json()
             setChats(data)
@@ -48,7 +48,7 @@ function Chat(props) {
             console.error(error)
         }
     }
-    
+
 
     const handleChange = (evt) => {
         setChat({ ...chat, [evt.target.name]: evt.target.value })
@@ -78,19 +78,19 @@ function Chat(props) {
                     </IconButton>
                 </div>
             </div>
-            {/*                 {chats.map((chat) => {
-                    return (
-                        <div className='chat-body'>
-                            <ul>
-                                <li key={chat._id}>
-                                    <p className='chat-message'>{chat.message}</p>
-                                    <span className='chat-name'>{chat.name}</span>
-                                </li>
-                            </ul>
-                        </div>
-                    )
-                })} */}
             <div className='chat-body'>
+            {chats.map((chat) => {
+                return (
+                        <ul>
+                            <li key={chat._id}>
+                                <p className='chat-message'>{chat.message}</p>
+                                <span className='chat-name'>{chat.name}</span>
+                            </li>
+                        </ul>
+                )
+            })}
+            </div>
+{/*             <div className='chat-body'>
                 <p className='chat-message'>
                     <span className="chat-name">Darya</span>
                     Hey
@@ -133,7 +133,7 @@ function Chat(props) {
                         {new Date().toUTCString()}
                     </span>
                 </p>
-            </div>
+            </div> */}
             <div className='chat-footer'>
                 <InsertEmoticon />
                 <input type='text' value={chat.message} name='message' onChange={handleChange} placeholder='Enter Message' />
