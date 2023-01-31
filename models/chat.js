@@ -1,8 +1,8 @@
 const { model, Schema } = require('mongoose')
 
 const chatSchema = new Schema({
+    poster:{type: Schema.Types.ObjectId, ref: 'User'},
     message: {required: true, type: String},
-    name: String,
 },  {
     timestamps: true
 })
