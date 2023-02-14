@@ -6,7 +6,6 @@ import { AttachFile, InsertEmoticon, MoreVert, SearchOutlined, Mic } from '@mui/
 
 function Chat(props) {
     const [chats, setChats] = useState([])
-    const [foundChat, setFoundChat] = useState(null)
     const [chat, setChat] = useState({
         name: '',
         message: ''
@@ -38,7 +37,7 @@ function Chat(props) {
                 body: JSON.stringify({ ...chat })
             })
             const data = await response.json()
-            setChats(data)
+            setChat(data)
             setChat({
                 name: '',
                 message: ''
@@ -54,7 +53,7 @@ function Chat(props) {
     }
     useEffect(() => {
         listChatsByUser()
-    }, [])
+    }, [chat])
     return (
 
         <div className='chat'>
@@ -78,16 +77,17 @@ function Chat(props) {
                 </div>
             </div>
             <div className='chat-body'>
+            return(
+            <ul>
             {chats.map((chat) => {
                 return (
-                        <ul>
                             <li key={chat._id}>
                                 <p className='chat-message'>{chat.message}</p>
                                 <span className='chat-name'>{chat.name}</span>
                             </li>
-                        </ul>
                 )
             })}
+            </ul>)
             </div>
 {/*             <div className='chat-body'>
                 <p className='chat-message'>
