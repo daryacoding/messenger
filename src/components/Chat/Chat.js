@@ -1,6 +1,5 @@
 import React from 'react'
 import './Chat.css'
-import CreateChat from '../CreateChat/CreateChat'
 import { useState, useEffect } from 'react'
 import { Avatar, IconButton } from '@mui/material'
 import { AttachFile, InsertEmoticon, MoreVert, SearchOutlined, Mic } from '@mui/icons-material'
